@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bon o Bon Pistacho</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --pistacho: #7ab648;
+    --pistacho-claro: #a8d86e;
+    --pistacho-palido: #d4eda0;
+    --pistacho-fondo: #eef7e0;
+    --amargo: #2c1810;
+    --amargo-medio: #4a2e1f;
+    --amargo-claro: #6b4530;
+    --crema: #f9f5ec;
+    --oro: #c9a84c;
+    --rojo-arcor: #d4282e;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--crema);
+    color: var(--amargo);
+    overflow-x: hidden;
+  }
+
+  /* ── hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background:
+      radial-gradient(ellipse at 25% 30%, rgba(122,182,72,.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 70%, rgba(44,24,16,.06) 0%, transparent 50%),
+      var(--crema);
+    position: relative;
+  }
+
+  /* pistachio shell pattern background */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='40' cy='40' rx='12' ry='16' fill='none' stroke='%237ab648' stroke-width='.6' opacity='.06' transform='rotate(15 40 40)'/%3E%3C/svg%3E") repeat;
+    pointer-events: none;
+  }
+
+  .brand-tag {
+    font-size: .8rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--amargo-claro);
+    margin-bottom: .5rem;
+    animation: fadeUp .7s ease-out both;
+  }
+  .brand-tag span {
+    color: var(--rojo-arcor);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.6rem, 7vw, 5.2rem);
+    line-height: 1.1;
+    color: var(--amargo);
+    animation: fadeUp .7s .12s ease-out both;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--pistacho);
+  }
+
+  .subtitle {
+    font-size: clamp(.95rem, 2.2vw, 1.25rem);
+    font-weight: 300;
+    color: var(--amargo-claro);
+    margin-top: .3rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp .7s .24s ease-out both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-cue {
+    animation: fadeUp .7s .4s ease-out both, bobble 2.5s 1.2s ease-in-out infinite;
+    color: var(--pistacho);
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+  }
+  @keyframes bobble {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(7px); }
+  }
+
+  /* ── sections ── */
+  section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    color: var(--amargo);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pistacho), transparent);
+  }
+
+  p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  /* ── 3D bonbon ── */
+  .bonbon-zone {
+    text-align: center;
+    padding: 3rem 2rem 4rem;
+  }
+
+  .bonbon-stage {
+    perspective: 600px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .bonbon {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .8s cubic-bezier(.25,.46,.45,.94);
+    animation: gentleSpin 6s ease-in-out infinite;
+  }
+  .bonbon-stage:hover .bonbon,
+  .bonbon-stage.cracked .bonbon {
+    animation: none;
+  }
+  .bonbon-stage:hover .bonbon {
+    transform: rotateY(15deg) rotateX(-10deg);
+  }
+
+  @keyframes gentleSpin {
+    0%, 100% { transform: rotateY(0deg); }
+    50%      { transform: rotateY(12deg); }
+  }
+
+  /* outer shell */
+  .shell {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, #7a5035, var(--amargo-medio) 50%, var(--amargo) 100%);
+    box-shadow:
+      0 8px 30px rgba(44,24,16,.4),
+      inset 0 2px 8px rgba(255,255,255,.08);
+    transition: all .6s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .shell::after {
+    content: '';
+    position: absolute;
+    top: 12%;
+    left: 20%;
+    width: 35%;
+    height: 20%;
+    background: radial-gradient(ellipse, rgba(255,255,255,.15), transparent);
+    border-radius: 50%;
+  }
+  .shell-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: .55rem;
+    color: var(--pistacho-claro);
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    z-index: 1;
+    text-align: center;
+    line-height: 1.4;
+    opacity: .8;
+  }
+
+  /* cracked state */
+  .bonbon-stage.cracked .shell {
+    clip-path: polygon(0 0, 45% 0, 35% 50%, 50% 100%, 0 100%);
+    transition: clip-path .6s ease;
+  }
+
+  .filling {
+    position: absolute;
+    inset: 15px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--pistacho-claro), var(--pistacho) 60%, #5a8e30 100%);
+    box-shadow: inset 0 -4px 12px rgba(0,0,0,.2);
+    opacity: 0;
+    transform: scale(.6);
+    transition: all .5s .15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .filling span {
+    font-size: .6rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0,0,0,.3);
+    opacity: 0;
+    transition: opacity .3s .5s;
+  }
+  .bonbon-stage.cracked .filling {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .bonbon-stage.cracked .filling span {
+    opacity: 1;
+  }
+
+  /* wafer ring */
+  .wafer-ring {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 3px dashed var(--oro);
+    opacity: 0;
+    transition: opacity .4s .25s;
+  }
+  .bonbon-stage.cracked .wafer-ring {
+    opacity: .5;
+  }
+
+  .bonbon-label {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: .85rem;
+    color: var(--pistacho);
+    font-weight: 300;
+    transition: opacity .3s;
+  }
+  .bonbon-stage.cracked ~ .bonbon-label { opacity: 0; }
+
+  /* ── layers diagram ── */
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 2rem auto;
+    max-width: 360px;
+  }
+  .layer {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    font-size: .95rem;
+    font-weight: 400;
+    transition: transform .25s, box-shadow .25s;
+    cursor: default;
+    position: relative;
+  }
+  .layer:hover {
+    transform: scaleX(1.03);
+    z-index: 2;
+  }
+  .layer-choco {
+    background: linear-gradient(135deg, var(--amargo), var(--amargo-medio));
+    color: var(--pistacho-palido);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 2px 12px rgba(44,24,16,.3);
+  }
+  .layer-wafer {
+    background: linear-gradient(135deg, #d4a95a, #c49545);
+    color: var(--amargo);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  .layer-pistacho {
+    background: linear-gradient(135deg, var(--pistacho), var(--pistacho-claro));
+    color: white;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 16px rgba(122,182,72,.25);
+    font-weight: 600;
+  }
+
+  /* ── fact cards ── */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .fact-card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.3rem;
+    text-align: center;
+    border: 1px solid var(--pistacho-fondo);
+    transition: transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .fact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(122,182,72,.12);
+  }
+  .fact-icon { font-size: 1.8rem; margin-bottom: .4rem; }
+  .fact-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--pistacho);
+  }
+  .fact-card p {
+    font-size: .9rem;
+    color: var(--amargo-claro);
+    margin: 0;
+  }
+
+  /* ── quiz ── */
+  .quiz-box {
+    background: linear-gradient(135deg, var(--amargo), var(--amargo-medio));
+    border-radius: 18px;
+    padding: 2.5rem;
+    color: var(--pistacho-palido);
+    margin-top: 2rem;
+  }
+  .quiz-box h2 { color: var(--pistacho-claro); }
+  .quiz-box h2::after { background: linear-gradient(90deg, var(--pistacho-claro), transparent); }
+  .quiz-question {
+    font-size: 1.1rem;
+    margin: 1rem 0;
+    font-weight: 300;
+  }
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .quiz-btn {
+    background: rgba(122,182,72,.1);
+    border: 1px solid rgba(122,182,72,.25);
+    color: var(--pistacho-palido);
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    padding: .7rem 1.1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: left;
+  }
+  .quiz-btn:hover {
+    background: rgba(122,182,72,.2);
+    transform: translateX(4px);
+  }
+  .quiz-btn.correct {
+    background: rgba(122,182,72,.35);
+    border-color: var(--pistacho);
+  }
+  .quiz-btn.wrong {
+    background: rgba(0,0,0,.15);
+    border-color: rgba(255,255,255,.05);
+    opacity: .5;
+  }
+  .quiz-result {
+    margin-top: .8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 1.4em;
+    color: var(--pistacho-claro);
+  }
+
+  /* ── counter ── */
+  .counter-zone {
+    text-align: center;
+    padding: 2rem;
+    margin: 1rem auto;
+    max-width: 360px;
+    background: var(--pistacho-fondo);
+    border-radius: 18px;
+  }
+  .counter-zone p {
+    font-size: .9rem;
+    color: var(--amargo-claro);
+    margin-bottom: .8rem;
+  }
+  .counter-display {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    color: var(--pistacho);
+    line-height: 1;
+    transition: transform .15s;
+  }
+  .counter-display.bump {
+    transform: scale(1.15);
+  }
+  .counter-btn {
+    margin-top: 1rem;
+    background: var(--pistacho);
+    color: white;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    padding: .7rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .counter-btn:hover {
+    background: var(--pistacho-claro);
+  }
+  .counter-btn:active {
+    transform: scale(.95);
+  }
+
+  /* ── footer ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: .82rem;
+    color: var(--amargo-claro);
+    opacity: .6;
+    border-top: 1px solid var(--pistacho-fondo);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="brand-tag"><span>Arcor</span> &middot; Bon o Bon</div>
+  <h1>Bon o Bon<br><em>Pistacho</em></h1>
+  <p class="subtitle">Wafer crocante, crema de pistacho, chocolate amargo</p>
+  <div class="scroll-cue" onclick="document.querySelector('#about').scrollIntoView({behavior:'smooth'})">&#9662;</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>The Pistachio Wave</h2>
+  <p>
+    Arcor's Bon o Bon has been an Argentine icon since 1984: a crispy wafer sphere filled with cream
+    and coated in chocolate. Produced at a rate of 10,000 units per minute, it reaches over 80 countries
+    and is the second best selling bonbon on the planet.
+  </p>
+  <p>
+    The Pistacho edition rides the global pistachio craze. Launched in Brazil, it pairs
+    a creamy pistachio filling with a crunchy wafer shell and a double coating of dark chocolate (53% cacao).
+    It sold out within hours in Argentine kioscos that managed to import it.
+  </p>
+</section>
+
+<!-- BONBON INTERACTION -->
+<div class="bonbon-zone">
+  <h2>Crack it open</h2>
+  <br><br>
+  <div class="bonbon-stage" id="bonbonStage" onclick="crackBonbon()">
+    <div class="bonbon">
+      <div class="shell">
+        <span class="shell-label">Bon o Bon<br>Pistacho</span>
+      </div>
+      <div class="wafer-ring"></div>
+      <div class="filling"><span>pistachio cream</span></div>
+    </div>
+  </div>
+  <span class="bonbon-label">click to crack</span>
+</div>
+
+<!-- LAYERS -->
+<section>
+  <h2>Three Layers</h2>
+  <p>Every Bon o Bon Pistacho is built from the outside in.</p>
+  <div class="layers">
+    <div class="layer layer-choco">Double dark chocolate coating</div>
+    <div class="layer layer-wafer">Crunchy wafer shell</div>
+    <div class="layer layer-pistacho">Creamy pistachio filling</div>
+  </div>
+</section>
+
+<!-- FACTS -->
+<section>
+  <h2>Quick Facts</h2>
+  <div class="facts">
+    <div class="fact-card">
+      <div class="fact-icon">&#127855;</div>
+      <h3>1984</h3>
+      <p>Bon o Bon created by Arcor</p>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">&#127758;</div>
+      <h3>80+</h3>
+      <p>Countries where it's sold</p>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">&#9889;</div>
+      <h3>10,000</h3>
+      <p>Units produced per minute</p>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">&#127793;</div>
+      <h3>53%</h3>
+      <p>Cacao in the dark coating</p>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTER -->
+<section>
+  <div class="counter-zone">
+    <p>How many could you eat?</p>
+    <div class="counter-display" id="counter">0</div>
+    <br>
+    <button class="counter-btn" id="counterBtn" onclick="eatOne()">Eat one more</button>
+    <p id="counterMsg" style="margin-top:.8rem; min-height:1.2em; font-weight:400;"></p>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section>
+  <div class="quiz-box">
+    <h2>Quick Quiz</h2>
+    <p class="quiz-question" id="quizQ"></p>
+    <div class="quiz-options" id="quizOpts"></div>
+    <p class="quiz-result" id="quizResult"></p>
+  </div>
+</section>
+
+<footer>
+  Made with &#9829; as a tribute to an Argentine classic.
+  <br>Fan page. Not affiliated with Arcor.
+</footer>
+
+<script>
+// ── bonbon crack ──
+let cracked = false;
+function crackBonbon() {
+  const stage = document.getElementById('bonbonStage');
+  cracked = !cracked;
+  stage.classList.toggle('cracked', cracked);
+}
+
+// ── counter ──
+let count = 0;
+const msgs = [
+  '', '', '',
+  'Getting started...',
+  '', '',
+  'You really like pistachio.',
+  '', '', '',
+  'Okay, that is a lot.',
+  '', '', '', '',
+  'Are you sure about this?',
+  '', '', '', '',
+  'Arcor thanks you for your service.'
+];
+function eatOne() {
+  count++;
+  const el = document.getElementById('counter');
+  el.textContent = count;
+  el.classList.add('bump');
+  setTimeout(() => el.classList.remove('bump'), 150);
+  const msgEl = document.getElementById('counterMsg');
+  if (count < msgs.length && msgs[count]) {
+    msgEl.textContent = msgs[count];
+  } else if (count >= msgs.length) {
+    msgEl.textContent = '';
+  }
+}
+
+// ── quiz ──
+const quizData = [
+  { q: 'Where was Bon o Bon created?', opts: ['Brazil','Argentina','Mexico','Chile'], ans: 1 },
+  { q: 'What type of chocolate coats the Pistacho edition?', opts: ['White','Milk','Dark (amargo)','Ruby'], ans: 2 },
+  { q: 'How many Bon o Bons does Arcor produce per minute?', opts: ['1,000','5,000','10,000','25,000'], ans: 2 },
+  { q: 'What year was the original Bon o Bon launched?', opts: ['1978','1984','1992','2001'], ans: 1 },
+];
+let qi = 0;
+function loadQuiz() {
+  const d = quizData[qi];
+  document.getElementById('quizQ').textContent = d.q;
+  document.getElementById('quizResult').textContent = '';
+  const box = document.getElementById('quizOpts');
+  box.innerHTML = '';
+  d.opts.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'quiz-btn';
+    b.textContent = o;
+    b.onclick = () => answer(i);
+    box.appendChild(b);
+  });
+}
+function answer(i) {
+  const btns = document.querySelectorAll('.quiz-btn');
+  const correct = quizData[qi].ans;
+  btns.forEach((b, idx) => {
+    b.disabled = true;
+    b.classList.add(idx === correct ? 'correct' : 'wrong');
+  });
+  const res = document.getElementById('quizResult');
+  res.textContent = i === correct ? 'Exacto! Next one...' : 'Not quite! Next one...';
+  setTimeout(() => { qi = (qi + 1) % quizData.length; loadQuiz(); }, 1800);
+}
+loadQuiz();
+</script>
+</body>
+</html>
